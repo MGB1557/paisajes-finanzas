@@ -1,0 +1,386 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh; /* Altura dinámica perfecta para móviles de Apple y Android */
+    margin: 0;
+    padding: 10px;      /* Margen de seguridad para que no pegue a los bordes */
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;  /* En móviles: foto arriba, formulario abajo */
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #dcdcdc; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    overflow: hidden;
+    max-width: 850px;
+    width: 100%;          /* Ocupa todo el ancho con total fluidez */
+    margin: 0 auto;
+}
+
+/* Contenedor de la imagen responsivo */
+.caja-imagen {
+    display: block;
+    width: 100%;
+    max-height: 220px;       /* Altura perfecta en móvil para que no ocupe toda la pantalla */
+    overflow: hidden;        /* Corta los bordes limpios sin salirse */
+    background-color: #e2e8f0; /* Fondo gris suave mientras carga la foto */
+}
+
+/* La propia foto dentro de la caja (unificada y nítida) */
+.caja-imagen img, .imagen-1, #imagenPaisaje {
+    width: 100%;
+    height: 100%;
+    max-height: 220px;
+    object-fit: cover;       /* Mantiene la nitidez original ajustándola sin deformar */
+    object-position: center;  /* Centra lo más bonito del paisaje */
+    display: block;
+}
+
+.caja-formulario {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.caja-formulario h3 {
+    color: #2f4546;
+    margin-bottom: 2px;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.grupo-campo label {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.fila-inputs {
+    display: flex;
+    gap: 8px;
+}
+
+.input-campo {
+    width: 100%;
+    padding: 9px 12px;
+    border: 2px solid #cbd5e1; 
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background-color: #fff;
+}
+
+.input-campo:focus {
+    border-color: #4CAF50;
+}
+
+/* Tarjetas de resumen */
+.tarjetas-resumen {
+    display: flex;
+    gap: 8px;
+}
+
+.tarjeta {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    border-left: 6px solid #4CAF50;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta span {
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.tarjeta strong {
+    font-size: 1rem;
+    color: #2f4546;
+}
+
+/* Barra de progreso */
+.contenedor-barra {
+    background: #e0e0e0;
+    border-radius: 10px;
+    height: 8px;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.barra-progreso {
+    height: 100%;
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.alerta-aviso {
+    color: #d9534f;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Botones */
+.boton-enviar {
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid #3e8e41;
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.boton-enviar:hover {
+    background-color: #45a049;
+}
+
+.cabecera-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boton-secundario {
+    background: transparent;
+    border: 2px solid #d9534f;
+    color: #d9534f;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.boton-secundario:hover {
+    background: #d9534f;
+    color: white;
+}
+
+/* Lista de gastos */
+.contenedor-lista-gastos {
+    max-height: 140px;
+    overflow-y: auto;
+    border-top: 2px solid #cbd5e1;
+    padding-top: 8px;
+}
+
+#listaGastos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+#listaGastos li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fafafa;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    border: 2px solid #cbd5e1; 
+}
+
+/* Estilos de la etiqueta de categoría */
+.etiqueta-categoria {
+    font-size: 0.75rem;
+    background-color: #e2e8f0;
+    color: #334155;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    font-weight: 600;
+}
+
+.btn-borrar-item {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Estadísticas anuales */
+.caja-estadisticas-anual {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.caja-estadisticas-anual h4 {
+    font-size: 0.9rem;
+    color: #2f4546;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+}
+
+.grid-anual {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.grid-anual strong {
+    color: #1e293b;
+}
+
+/* ADAPTACIÓN PARA ORDENADORES Y TABLETS */
+@media (min-width: 768px) {
+    .contenedor-principal {
+        flex-direction: row;
+    }
+    .caja-imagen {
+        flex: 1;
+        max-width: 42%;
+        max-height: none; /* En PC deja que recupere altura completa */
+    }
+    .caja-imagen img, .imagen-1, #imagenPaisaje {
+        height: 100%;
+        max-height: none;
+        min-height: 520px;
+    }
+}
+
+.caja-copia-seguridad {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.btn-copia {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 14px;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+.btn-guardar {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-guardar:hover {
+    background-color: #218838;
+}
+
+.btn-cargar {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-cargar:hover {
+    background-color: #138496;
+}
+
+/* --- MODO OSCURO --- */
+body.dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .caja-formulario {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode label {
+    color: #ffffff !important;
+}
+
+body.dark-mode .input-campo {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border-color: #444 !important;
+}
+
+body.dark-mode .btn-modo:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Tarjetas y cajas en modo oscuro */
+body.dark-mode .tarjetas-resumen .tarjeta {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .tarjetas-resumen .tarjeta span {
+    color: #b0b0b0 !important;
+}
+
+body.dark-mode .tarjetas-resumen .tarjeta strong {
+    color: #ffffff !important;
+}
+
+body.dark-mode .caja-estadisticas-anual {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #333 !important;
+}
+
+body.dark-mode .caja-estadisticas-anual h4 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .grid-anual strong {
+    color: #4CAF50 !important;
+}
+
+body.dark-mode .etiqueta-categoria {
+    background-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-mode #listaGastos li {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+    border-color: #444 !important;
+}

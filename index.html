@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Gastos 💰</title>
+    <!-- Favicon profesional -->
+    <link rel="icon" href="https://img.icons8.com/color/48/expensive-2--v1.png">
+    <!-- Librería de gráficos Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.Css">
+</head>
+<body>
+
+    <div class="contenedor-principal">
+        <!-- Caja de la imagen natural alegre -->
+        <div class="caja-imagen">
+            <img src="" alt="Ventana a la naturaleza" class="imagen-1" id="imagenPaisaje">
+        </div>
+
+        <!-- Caja del formulario y controles financieros -->
+        <div class="caja-formulario">
+            <!-- Cabecera con título, manual y modo oscuro -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;">Control de Gastos 💰</h3>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a href="manual.html" target="_blank" title="Abrir Manual de Uso" style="text-decoration: none; font-size: 18px; padding: 4px 8px; background: #e2e8f0; border-radius: 6px; color: #334155; font-weight: bold;">📖 Ayuda</a>
+                    <button id="btnModoOscuro" class="btn-modo" title="Cambiar modo oscuro/claro" style="background: none; border: none; font-size: 20px; cursor: pointer; padding: 5px; border-radius: 50%;">🌙</button>
+                </div>
+            </div>
+
+            <!-- Selector de Mes -->
+            <div class="grupo-campo">
+                <label for="selectMes">Selecciona el Mes:</label>
+                <select id="selectMes" class="input-campo">
+                    <option value="Enero">Enero</option>
+                    <option value="Febrero">Febrero</option>
+                    <option value="Marzo">Marzo</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Mayo">Mayo</option>
+                    <option value="Junio">Junio</option>
+                    <option value="Julio">Julio</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Septiembre">Septiembre</option>
+                    <option value="Octubre">Octubre</option>
+                    <option value="Noviembre">Noviembre</option>
+                    <option value="Diciembre">Diciembre</option>
+                </select>
+            </div>
+
+            <!-- Fila de Ingresos y Ahorro -->
+            <div class="fila-inputs">
+                <div class="grupo-campo">
+                    <label for="inputIngreso">Ingreso / Sueldo (€)</label>
+                    <input type="number" id="inputIngreso" class="input-campo" placeholder="Ej: 2000" step="any">
+                </div>
+                <div class="grupo-campo">
+                    <label for="inputAhorro">Ahorro deseado (€)</label>
+                    <input type="number" id="inputAhorro" class="input-campo" placeholder="Ej: 300" step="any">
+                </div>
+            </div>
+
+            <!-- Formulario para añadir gastos -->
+            <form id="formAnadirGasto" style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="fila-inputs">
+                    <div class="grupo-campo" style="flex: 2;">
+                        <label for="inputNombre">Concepto del Gasto</label>
+                        <input type="text" id="inputNombre" class="input-campo" placeholder="Ej: Alquiler, Supermercado...">
+                    </div>
+                    <div class="grupo-campo" style="flex: 1;">
+                        <label for="inputPrecio">Precio (€)</label>
+                        <input type="number" id="inputPrecio" class="input-campo" placeholder="Ej: 50" step="any">
+                    </div>
+                    <div class="grupo-campo" style="flex: 1;">
+                        <label for="selectCategoria">Categoría</label>
+                        <select id="selectCategoria" class="input-campo">
+                            <option value="🛒 Comida">🛒 Comida</option>
+                            <option value="🏠 Casa">🏠 Casa</option>
+                            <option value="🎟️ Ocio">🎟️ Ocio</option>
+                            <option value="🚗 Transporte">🚗 Transporte</option>
+                            <option value="💡 Facturas">💡 Facturas</option>
+                            <option value="📦 Otros">📦 Otros</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="boton-enviar">Añadir Gasto</button>
+            </form>
+
+            <!-- Tarjetas de resumen del mes actual -->
+            <div class="tarjetas-resumen">
+                <div class="tarjeta">
+                    <span>Gastos del Mes</span>
+                    <strong id="totalGastos">0.00 €</strong>
+                </div>
+                <div class="tarjeta" style="border-left-color: #337ab7;">
+                    <span>Saldo Disponible</span>
+                    <strong id="saldoRestante">0.00 €</strong>
+                </div>
+            </div>
+
+            <!-- Barra de progreso de gastos -->
+            <div class="grupo-campo">
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                    <span>Progreso del Presupuesto</span>
+                    <span id="alertaPresupuesto" class="alerta-aviso" style="display: none;">¡Cuidado, presupuesto superado!</span>
+                </div>
+                <div class="contenedor-barra">
+                    <div id="barraProgreso" class="barra-progreso"></div>
+                </div>
+            </div>
+
+            <!-- Lista de gastos -->
+            <div>
+                <div class="cabecera-lista">
+                    <h4 style="font-size: 0.85rem; color: #2f4546;">Gastos Registrados</h4>
+                    <button type="button" id="btnVaciar" class="boton-secundario">Vaciar Mes</button>
+                </div>
+                <div class="contenedor-lista-gastos">
+                    <ul id="listaGastos"></ul>
+                </div>
+            </div>
+
+            <!-- Gráfico Visual Anual -->
+            <div class="caja-formulario" style="margin-top: 20px;">
+                <h4 style="font-size: 0.85rem; color: #2f4546; margin-bottom: 10px;">Evolución de Gastos por Mes</h4>
+                <div style="position: relative; height: 200px; width: 100%;">
+                    <canvas id="graficoGastosMeses"></canvas>
+                </div>
+            </div>
+
+            <!-- Resumen Anual Global -->
+            <div class="caja-estadisticas-anual">
+                <h4>Resumen Anual (Meses con datos)</h4>
+                <div class="grid-anual">
+                    <div>Ingresos: <strong id="anualIngresos">0.00 €</strong></div>
+                    <div>Ahorro: <strong id="anualAhorro">0.00 €</strong></div>
+                    <div>Gastos: <strong id="anualGastos">0.00 €</strong></div>
+                </div>
+            </div>
+
+            <!-- Botones de Copia de Seguridad en Horizontal -->
+            <div class="caja-copia-seguridad">
+                <button id="btnExportar" class="btn-copia btn-guardar">
+                    💾 Descargar copia
+                </button>
+                
+                <label for="inputImportar" class="btn-copia btn-cargar">
+                    📂 Cargar copia
+                </label>
+                <input type="file" id="inputImportar" accept=".json" style="display: none;">
+            </div>
+
+            <!-- Botón para reiniciar todos los datos desde cero -->
+            <div style="margin-top: 15px; text-align: center;">
+                <button type="button" id="btnBorrarTodo" class="boton-secundario" style="border-color: #d9534f; color: #d9534f; width: 100%; padding: 8px; font-weight: bold;">
+                    🗑️ Borrar Todo y Empezar de Cero
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="index.js" defer></script>
+</body>
+</html>
